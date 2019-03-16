@@ -28,7 +28,7 @@ def PCA_decomposition(X_train,X_test):
 def fit_LR(X_train,y_train):
     from sklearn.linear_model import LogisticRegression
     lr=LogisticRegression()
-    lr.fit(X_train,y_train)
+    lr.fit(X_train,y_train.ravel())
     return lr
 
 def fit_Bernoulli_NB(X_train,y_train):
@@ -100,4 +100,4 @@ def predict_and_score(lr,X_test,y_test):
     from sklearn.metrics import accuracy_score, confusion_matrix
     p_test=lr.predict(X_test)
     print(accuracy_score(y_test,p_test))
-    print(confusion_matrix(y_test,p_test))
+    # print(confusion_matrix(y_test,p_test))
