@@ -34,7 +34,7 @@ def fit_LR(X_train,y_train):
 def fit_Bernoulli_NB(X_train,y_train):
     from sklearn.naive_bayes import BernoulliNB
     nb=BernoulliNB()
-    nb.fit(X_train,y_train)
+    nb.fit(X_train,y_train.ravel())
     return nb
 
 '''
@@ -50,14 +50,14 @@ def fit_2NN(X_train,y_train,_algorithm="",_weights="uniform"):
         clf = neighbors.KNeighborsClassifier(2,weights=_weights)
     else:        
         clf = neighbors.KNeighborsClassifier(2,algorithm=_algorithm, weights=_weights)
-    clf.fit(X_train, y_train)
+    clf.fit(X_train, y_train.ravel())
     return clf
 
 # _gamma= "auto" or "scale"
 def fit_SVC(X_train,y_train, _gamma="auto"):
     from sklearn import svm
     clf = svm.NuSVC(gamma=_gamma)
-    clf.fit(X_train, y_train)
+    clf.fit(X_train, y_train.ravel())
     return clf
 
 def plot_2D(lr,X_train,y_train):

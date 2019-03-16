@@ -1,18 +1,8 @@
-import sys
 import numpy as np
-
 from scipy.stats import gmean
 from scipy.io import wavfile
-
 from pyAudioAnalysis import audioBasicIO
 from pyAudioAnalysis import audioFeatureExtraction
-
-# from aubio import source, pitch
-
-# import librosa
-# y, sr = librosa.load("test.wav")
-# flatness = librosa.feature.spectral_flatness(y=y)
-# print(flatness.mean())
 
 def spectral_properties(file):
   [sample_rate, data] = audioBasicIO.readAudioFile("test.wav");
@@ -40,18 +30,15 @@ def spectral_properties(file):
     'meanfreq': mean,
     'sd': sd,
     'median': median,
-    'mode': mode,
     'Q25': Q25,
     'Q75': Q75,
     'IQR': IQR,
     'skew': skew,
     'kurt': kurt,
-    'centroid': F[3].mean(),
     'sp.ent': F[5].mean(),
     'sfm': spec_flatness,
+    'mode': mode,
+    'centroid': F[3].mean(),
   }
-
   return result_d
-
-print(spectral_properties("test.wav"))
 
