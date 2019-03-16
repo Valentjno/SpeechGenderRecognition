@@ -54,6 +54,7 @@ def fit_2NN(X_train,y_train,_algorithm="",_weights="uniform"):
     clf.fit(X_train, y_train)
     return clf
 
+# _gamma= "auto" or "scale"
 def fit_SVC(X_train,y_train, _gamma="auto"):
     from sklearn import svm
     clf = svm.NuSVC(gamma=_gamma)
