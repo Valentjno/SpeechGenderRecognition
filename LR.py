@@ -3,9 +3,8 @@
 """
 Created on Wed Mar 13 16:29:29 2019
 
-@author: valentino
+@author: valentino, helias
 """
-
 
 import numpy
 from matplotlib import pyplot as plt
