@@ -10,6 +10,13 @@ Created on Wed Mar 13 16:29:29 2019
 import numpy
 from matplotlib import pyplot as plt
 
+def NormalizeL2(X_train,X_test):    
+    from sklearn.preprocessing import Normalizer
+    norm = Normalizer(norm='l2')
+    X_training_l2 = norm.transform(X_train)
+    X_test_l2 = norm.transform(X_test)
+    return X_training_l2,X_test_l2
+
 #normalizzato l2!
 def PCA_decomposition(X_train,X_test):
     from sklearn.decomposition import PCA
