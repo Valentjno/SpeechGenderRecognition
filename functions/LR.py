@@ -96,8 +96,25 @@ def plot_3D(lr,X_train,y_train):
     plt.gca().plot_surface(x,y,z,shade=False,color='y')
     plt.show()
     
-def predict_and_score(lr,X_test,y_test):
+def predict_and_score(lr,x_test,y_test):
     from sklearn.metrics import accuracy_score, confusion_matrix
-    p_test=lr.predict(X_test)
-    print(accuracy_score(y_test,p_test))
-    # print(confusion_matrix(y_test,p_test))
+    p_test=lr.predict(x_test)
+    return accuracy_score(y_test,p_test), confusion_matrix(y_test,p_test)
+
+def run_classifier(x_train, y_train, x_test, y_test):
+    lr = fit_LR(x_train, y_train)
+    acc, conf_matrix = predict_and_score(lr, x_test, y_test)
+    print("LR: \t", acc)
+
+    nb = fit_Bernoulli_NB(x_train, y_train)
+    acc, conf_matrix = predict_and_score(nb, x_test, y_test)
+    print("NB: \t", acc)
+
+    svc = fit_SVC(x_train, y_train, _gamma="scale")
+    acc, conf_matrix = predict_and_score(svc, x_test, y_test)
+    print("SVC: \t", acc)
+
+    _2nn = fit_2NN(x_train, y_train, _algorithm="ball_tree", _weights="distance")
+    acc, conf_matrix = predict_and_score(_2nn, x_test, y_test)
+    print("2NN: \t", acc)
+    
