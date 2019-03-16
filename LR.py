@@ -36,6 +36,16 @@ def fit_Bernoulli_NB(X_train,y_train):
     from sklearn.naive_bayes import BernoulliNB
     nb=BernoulliNB()
     nb.fit(X_train,y_train)
+    return nb
+
+def fit_2NN(X_train,y_train,_algorithm="",_weights="uniform"):
+    from sklearn import neighbors
+    if(_algorithm==""):
+        clf = neighbors.KNeighborsClassifier(2,weights=_weights)
+    else:        
+        clf = neighbors.KNeighborsClassifier(2,algorithm=_algorithm, weights=_weights)
+    clf.fit(X_training_l2, y_training)
+    return clf
 
 def plot_2D(lr,X_train,y_train):
     x_f=X_train[:,0]
