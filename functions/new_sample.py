@@ -5,7 +5,7 @@ from pyAudioAnalysis import audioBasicIO
 from pyAudioAnalysis import audioFeatureExtraction
 
 def spectral_properties(file):
-  [sample_rate, data] = audioBasicIO.readAudioFile("test.wav");
+  [sample_rate, data] = audioBasicIO.readAudioFile(file);
   F, f_names = audioFeatureExtraction.stFeatureExtraction(data, sample_rate, 0.050*sample_rate, 0.025*sample_rate);
 
   spec = np.abs(np.fft.rfft(data))
@@ -27,18 +27,18 @@ def spectral_properties(file):
   spec_flatness = gmean(spec**2)/np.mean(spec**2)
 
   result_d = {
-    'meanfreq': mean,
-    'sd': sd,
-    'median': median,
-    'Q25': Q25,
-    'Q75': Q75,
-    'IQR': IQR,
+    'meanfreq': mean/1000,
+    'sd': sd/1000,
+    'median': median/1000,
+    'Q25': Q25/1000,
+    'Q75': Q75/1000,
+    'IQR': IQR/1000,
     'skew': skew,
     'kurt': kurt,
     'sp.ent': F[5].mean(),
     'sfm': spec_flatness,
-    'mode': mode,
-    'centroid': F[3].mean(),
+    'mode': mode/1000,
+    'centroid': F[3].mean()/1000,
   }
   return result_d
 

@@ -17,7 +17,7 @@ def imp_dataset(dataset_path):
 
   # remove features less significant
   # features = features.drop(["dfrange", "mindom", "centroid", "mode", "sfm", "IQR", "median", "sd"])
-  features = features.drop(["meanfun", "maxfun", "minfun", "meandom", "mindom", "maxdom", "dfrange", "modindx"])
+  # features = features.drop(["meanfun", "maxfun", "minfun", "meandom", "mindom", "maxdom", "dfrange", "modindx"])
 
   # splitting dataset
   df1 = df_voice.iloc[: int(len(df_voice)*0.66)] # 66% of data
