@@ -58,7 +58,7 @@ def fit_2NN(X_train,y_train,_algorithm="",_weights="uniform"):
 def fit_SVC(X_train,y_train, _gamma="auto"):
     from sklearn import svm
     clf = svm.NuSVC(gamma=_gamma)
-    clf.fit(X_training_l2, y_training)
+    clf.fit(X_train, y_train)
     return clf
 
 def plot_2D(lr,X_train,y_train):
