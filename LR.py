@@ -32,6 +32,11 @@ def fit_LR(X_train,y_train):
     lr.fit(X_train,y_train)
     return lr
 
+def fit_BernoulliNB(X_train,y_train):
+    from sklearn.naive_bayes import BernoulliNB
+    nb=BernoulliNB()
+    nb.fit(X_train,y_train)
+
 def plot_2D(lr,X_train,y_train):
     x_f=X_train[:,0]
     y_f=X_train[:,1]
