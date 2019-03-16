@@ -16,7 +16,7 @@ def normalize_L2(X_train,X_test):
     X_test_l2 = norm.transform(X_test)
     return X_training_l2,X_test_l2
 
-#normalizzato l2!
+#normalizzed L2.
 def PCA_decomposition(X_train,X_test):
     from sklearn.decomposition import PCA
     pca=PCA()
@@ -37,13 +37,27 @@ def fit_Bernoulli_NB(X_train,y_train):
     nb.fit(X_train,y_train)
     return nb
 
+'''
+The possible parameters are:
+  _algorithm:
+      - "ball_tree","kd_tree","brute","auto".
+  _weights:
+      - "uniform"(default), "distance".
+'''
 def fit_2NN(X_train,y_train,_algorithm="",_weights="uniform"):
     from sklearn import neighbors
     if(_algorithm==""):
         clf = neighbors.KNeighborsClassifier(2,weights=_weights)
     else:        
         clf = neighbors.KNeighborsClassifier(2,algorithm=_algorithm, weights=_weights)
-    clf.fit(X_training_l2, y_training)
+    clf.fit(X_train, y_train)
+    return clf
+
+# _gamma= "auto" or "scale"
+def fit_SVC(X_train,y_train, _gamma="auto"):
+    from sklearn import svm
+    clf = svm.NuSVC(gamma=_gamma)
+    clf.fit(X_train, y_train)
     return clf
 
 def plot_2D(lr,X_train,y_train):
