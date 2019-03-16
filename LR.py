@@ -3,7 +3,7 @@
 """
 Created on Wed Mar 13 16:29:29 2019
 
-@author: valentino, helias
+@author: valentjno, helias
 """
 
 import numpy
