@@ -33,5 +33,20 @@ y_test = df2.loc[:, ['label']].values
 x_train, x_test = normalize_L2(x_train, x_test)
 x_train, x_test = PCA_decomposition(x_train, x_test)
 
+'''
 lr = fit_LR(x_train, y_train)
+print("LR")
 predict_and_score(lr, x_test, y_test)
+
+lr = fit_Bernoulli_NB(x_train, y_train)
+print("NB")
+predict_and_score(lr, x_test, y_test)
+
+lr = fit_SVC(x_train, y_train, _gamma="scale")
+print("SVC")
+predict_and_score(lr, x_test, y_test)
+
+lr = fit_2NN(x_train, y_train, _algorithm="ball_tree", _weights="distance")
+print("2NN")
+predict_and_score(lr, x_test, y_test)
+'''
