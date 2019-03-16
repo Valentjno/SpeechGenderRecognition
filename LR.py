@@ -10,7 +10,7 @@ Created on Wed Mar 13 16:29:29 2019
 import numpy
 from matplotlib import pyplot as plt
 
-def NormalizeL2(X_train,X_test):    
+def normalize_L2(X_train,X_test):    
     from sklearn.preprocessing import Normalizer
     norm = Normalizer(norm='l2')
     X_training_l2 = norm.transform(X_train)
@@ -32,7 +32,7 @@ def fit_LR(X_train,y_train):
     lr.fit(X_train,y_train)
     return lr
 
-def fit_BernoulliNB(X_train,y_train):
+def fit_Bernoulli_NB(X_train,y_train):
     from sklearn.naive_bayes import BernoulliNB
     nb=BernoulliNB()
     nb.fit(X_train,y_train)
