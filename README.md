@@ -51,6 +51,8 @@ $ q()
 
 Note: **q()** is to close the "r console".
 
+### Run the script
+
 Fill the folder **"male"** and **"female"** in **R/** with wavfile with the related gender.
 
 Use **Rscript** to run the file **extract_feature.r** to generate a new file "my_voice.csv" (*backup it before generate the new one*).
@@ -65,6 +67,6 @@ Rscript extractor_feature.r
 
 ## Credits
 
-**[Valentjno](https://github.com/Valentjno)**  
-**[Helias](https://github.com/Helias)**
+- **[Valentjno](https://github.com/Valentjno)**  
+- **[Helias](https://github.com/Helias)**
 

@@ -1,3 +1,8 @@
 __pycache__
 functions/__pycache__
 functions/__pycache__/*
+R/male/*.wav
+R/female/*.wav
+R/.RData
+R/.Rhistory
+
