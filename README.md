@@ -12,6 +12,13 @@ SpeechGenderRecognition
 - pandas
 - numpy
 - matplotlib
+- pyAudioAnalysis
+- scipy
+- sklearn
+- hmmlearn
+- simplejson
+- eyed3
+- pydub
 
 You can install this requirements with
 ```
