@@ -44,6 +44,9 @@ if args.inp:
       nb = load_model("models_trained/nb_model.sav")
       _2nn = load_model("models_trained/2nn_model.sav")
   except:
+      x_train, y_train, x_test, y_test = imp_dataset("dataset/voice.csv")
+      x_train, x_test      = normalize_L2(x_train, x_test)
+      x_train, x_test, pca = PCA_decomposition(x_train, x_test)
       svc = fit_SVC(x_train, y_train, _gamma="scale")
       lr = fit_LR(x_train, y_train)
       nb = fit_Bernoulli_NB(x_train, y_train)
