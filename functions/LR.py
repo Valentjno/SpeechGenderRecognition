@@ -7,11 +7,11 @@ Created on Wed Mar 13 16:29:29 2019
 """
 
 import numpy
-from matplotlib import pyplot as plt
 import pickle
+from matplotlib import pyplot as plt
+from sklearn.preprocessing import Normalizer
 
 def normalize_L2(X_train,X_test):    
-    from sklearn.preprocessing import Normalizer
     norm = Normalizer(norm='l2')
     X_training_l2 = norm.transform(X_train)
     X_test_l2 = norm.transform(X_test)
@@ -24,7 +24,7 @@ def PCA_decomposition(X_train,X_test):
     pca.fit(X_train)
     X_train_pca=pca.transform(X_train)
     X_test_pca=pca.transform(X_test)
-    return X_train_pca,X_test_pca
+    return X_train_pca,X_test_pca, pca
 
 def fit_LR(X_train,y_train):
     from sklearn.linear_model import LogisticRegression

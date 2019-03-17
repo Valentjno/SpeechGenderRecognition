@@ -13,8 +13,8 @@ args = parser.parse_args()
 x_train, y_train, x_test, y_test = imp_dataset("dataset/voice.csv")
 
 # normalization & PCA decomposition
-# x_train, x_test = normalize_L2(x_train, x_test)
-# x_train, x_test = PCA_decomposition(x_train, x_test)
+x_train, x_test      = normalize_L2(x_train, x_test)
+x_train, x_test, pca = PCA_decomposition(x_train, x_test)
 
 # run test
 if args.run: # --run or -r
@@ -67,12 +67,15 @@ if args.inp:
     x_samples.append(sample_csv[i][0:-1])
     y_samples.append(sample_csv[i][-1])
 
+  norm = Normalizer(norm='l2')
+
+  x_samples = norm.transform(x_samples)
+  x_samples = pca.transform(x_samples)
+
   svc_res   = svc.predict(x_samples),
   lr_res    = lr.predict(np.float64(x_samples)),
   nb_res    = nb.predict(np.float64(x_samples)),
   _2nn_res  =_2nn.predict(np.float64(x_samples)),
-
-  # print(svc_res[0])
 
   success = [0, 0, 0, 0]
   tot = len(svc_res[0])
