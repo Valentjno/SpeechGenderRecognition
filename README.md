@@ -40,7 +40,7 @@ If you run Linux (debian-based) you can use the follows commands to install R an
 ```
 $ sudo apt install r-base
 $ sudo apt install gfortran libsndfile1-dev libfftw3-dev
-$ r
+$ R
 ```
 
 With the last command you just opened r, so you can run the follows command to install packages:
