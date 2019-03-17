@@ -30,3 +30,41 @@ To run the classifier with a new sample use:
 ```
 python3 main.py -i path/file.csv
 ```
+
+
+## Extract new csv samples
+
+### Install R and packages
+
+If you run Linux (debian-based) you can use the follows commands to install R and dependencies:
+```
+$ sudo apt install r-base
+$ sudo apt install gfortran libsndfile1-dev libfftw3-dev
+$ r
+```
+
+With the last command you just opened r, so you can run the follows command to install packages:
+```
+$ install.packages("tuneR", "seewave", " xgboost")
+$ q()
+```
+
+Note: **q()** is to close the "r console".
+
+Fill the folder **"male"** and **"female"** in **R/** with wavfile with the related gender.
+
+Use **Rscript** to run the file **extract_feature.r** to generate a new file "my_voice.csv" (*backup it before generate the new one*).
+
+```
+Rscript extractor_feature.r
+```
+
+
+---
+
+
+## Credits
+
+**[Valentjno](https://github.com/Valentjno)**  
+**[Helias](https://github.com/Helias)**
+
