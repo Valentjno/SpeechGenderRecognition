@@ -10,14 +10,11 @@ parser.add_argument("-r", "--run",        action="store_true",                he
 args = parser.parse_args()
 
 
-x_train, y_train, x_test, y_test = imp_dataset("dataset/voice.csv")
-
-# normalization & PCA decomposition
-x_train, x_test      = normalize_L2(x_train, x_test)
-x_train, x_test, pca = PCA_decomposition(x_train, x_test)
-
 # run test
 if args.run: # --run or -r
+  x_train, y_train, x_test, y_test = imp_dataset("dataset/voice.csv")
+  x_train, x_test      = normalize_L2(x_train, x_test)
+  x_train, x_test, pca = PCA_decomposition(x_train, x_test)
   run_classifier(x_train, y_train, x_test, y_test)
 
 def test_new_sample(file):
@@ -41,11 +38,18 @@ def test_new_sample(file):
 if args.inp:
 
   # fitting model
-  svc = fit_SVC(x_train, y_train, _gamma="scale")
-  lr = fit_LR(x_train, y_train)
-  nb = fit_Bernoulli_NB(x_train, y_train)
-  _2nn = fit_2NN(x_train, y_train, _algorithm="ball_tree", _weights="distance")
-
+  try:
+      svc = load_model("models_trained/svc_model.sav")
+      lr = load_model("models_trained/lr_model.sav")
+      nb = load_model("models_trained/nb_model.sav")
+      _2nn = load_model("models_trained/2nn_model.sav")
+  except:
+      svc = fit_SVC(x_train, y_train, _gamma="scale")
+      lr = fit_LR(x_train, y_train)
+      nb = fit_Bernoulli_NB(x_train, y_train)
+      _2nn = fit_2NN(x_train, y_train, _algorithm="ball_tree", _weights="distance")
+      
+          
   file_path = args.inp
 
   file_lines = open(file_path, "r").read().split("\n")
