@@ -15,6 +15,7 @@ if args.run: # --run or -r
   x_train, y_train, x_test, y_test = imp_dataset("dataset/voice.csv")
   x_train, x_test      = normalize_L2(x_train, x_test)
   x_train, x_test, pca = PCA_decomposition(x_train, x_test)
+  pickle.dump(pca,open("models_trained/pca.sav",'wb'))
   run_classifier(x_train, y_train, x_test, y_test)
 
 def test_new_sample(file):
@@ -47,6 +48,7 @@ if args.inp:
       x_train, y_train, x_test, y_test = imp_dataset("dataset/voice.csv")
       x_train, x_test      = normalize_L2(x_train, x_test)
       x_train, x_test, pca = PCA_decomposition(x_train, x_test)
+      pickle.dump(pca,open("models_trained/pca.sav",'wb'))
       svc = fit_SVC(x_train, y_train, _gamma="scale")
       lr = fit_LR(x_train, y_train)
       nb = fit_Bernoulli_NB(x_train, y_train)
@@ -77,8 +79,12 @@ if args.inp:
   norm = Normalizer(norm='l2')
 
   x_samples = norm.transform(x_samples)
-  x_samples = pca.transform(x_samples)
-
+  try:
+      pca = pickle.load(open("models_trained/pca.sav", 'rb'))
+      x_samples = pca.transform(x_samples)
+  except:
+      x_samples = pca.transform(x_samples)
+      
   svc_res   = svc.predict(x_samples),
   lr_res    = lr.predict(np.float64(x_samples)),
   nb_res    = nb.predict(np.float64(x_samples)),
