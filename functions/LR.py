@@ -8,6 +8,7 @@ Created on Wed Mar 13 16:29:29 2019
 
 import numpy
 from matplotlib import pyplot as plt
+import pickle
 
 def normalize_L2(X_train,X_test):    
     from sklearn.preprocessing import Normalizer
@@ -117,4 +118,12 @@ def run_classifier(x_train, y_train, x_test, y_test):
     _2nn = fit_2NN(x_train, y_train, _algorithm="ball_tree", _weights="distance")
     acc, conf_matrix = predict_and_score(_2nn, x_test, y_test)
     print("2NN: \t", acc)
+
+#after the fit
+def save_model(model,filename):
+    _filename=filename+'.sav'
+    pickle.dump(model, open(_filename, 'wb'))
     
+def load_model(filename):
+    loaded_model = pickle.load(open(filename, 'rb'))
+    return loaded_model
