@@ -45,7 +45,7 @@ $ R
 
 With the last command you just opened r, so you can run the follows command to install packages:
 ```
-$ install.packages("tuneR", "seewave", " xgboost")
+$ install.packages("caTools", "rpart", "rpart.plot", "randomForest", "e1071", "tuneR", "seewave", " xgboost")
 $ q()
 ```
 
