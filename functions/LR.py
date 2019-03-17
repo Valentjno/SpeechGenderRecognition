@@ -118,6 +118,11 @@ def run_classifier(x_train, y_train, x_test, y_test):
     _2nn = fit_2NN(x_train, y_train, _algorithm="ball_tree", _weights="distance")
     acc, conf_matrix = predict_and_score(_2nn, x_test, y_test)
     print("2NN: \t", acc)
+    
+    save_model(lr,"lr_model")
+    save_model(nb,"nb_model")
+    save_model(svc,"svc_model")
+    save_model(_2nn,"2nn_model")
 
 #after the fit
 def save_model(model,filename):
