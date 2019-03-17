@@ -6,3 +6,4 @@ R/female/*.wav
 R/.RData
 R/.Rhistory
 *.sav
+models_trained/*.sav

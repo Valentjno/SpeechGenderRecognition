@@ -119,10 +119,10 @@ def run_classifier(x_train, y_train, x_test, y_test):
     acc, conf_matrix = predict_and_score(_2nn, x_test, y_test)
     print("2NN: \t", acc)
     
-    save_model(lr,"lr_model")
-    save_model(nb,"nb_model")
-    save_model(svc,"svc_model")
-    save_model(_2nn,"2nn_model")
+    save_model(lr,"models_trained/lr_model")
+    save_model(nb,"models_trained/nb_model")
+    save_model(svc,"models_trained/svc_model")
+    save_model(_2nn,"models_trained/2nn_model")
 
 #after the fit
 def save_model(model,filename):
