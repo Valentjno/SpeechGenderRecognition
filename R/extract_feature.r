@@ -1,14 +1,5 @@
-library(caTools)
-library(rpart)
-library(rpart.plot)
-library(randomForest)
-library(e1071)
-
 library(tuneR)
 library(seewave)
-library(xgboost)
-#library(warbleR)
-#library(mice)
 
 specan3 <- function(X, bp = c(0,22), wl = 2048, threshold = 5, parallel = 1){
   # To use parallel processing: library(devtools), install_github('nathanvan/parallelsugar')
