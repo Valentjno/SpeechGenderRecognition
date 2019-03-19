@@ -33,6 +33,15 @@ To run the classifiers use:
 python3 main.py -r
 ```
 
+To run the classifier with a new sample.wav use:
+
+```
+python3 main.py -w path/file.wav
+```
+
+**Note**: to convert any audio file into .wav file we recommend [SoundConverter](https://soundconverter.org/)
+
+
 To run the classifier with a new sample use:
 ```
 python3 main.py -i path/file.csv
