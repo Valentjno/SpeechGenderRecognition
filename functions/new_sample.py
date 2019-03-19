@@ -42,3 +42,18 @@ def spectral_properties(file):
   }
   return result_d
 
+def test_new_sample(file):
+  new_sample = []
+  test = spectral_properties(file)
+  new_sample = [test[t] for t in test]
+
+  norm = Normalizer(norm='l2')
+  new_sample = norm.transform(np.float64([new_sample]))
+
+  pca=PCA()
+  pca.fit(x_train)
+  new_sample=pca.transform(new_sample)[0]
+
+  print(svc.predict([new_sample]))
+  # print(new_sample)
+  return new_sample
