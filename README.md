@@ -1,7 +1,10 @@
 # SpeechGenderRecognition
 
-SpeechGenderRecognition
+This is project allows to recognize from a wav file the gender of who speak.
 
+If you have Telegram you can try the output of this project contacting: **[@GenderSpeechBot](https://t.me/GenderSpeechBot)**, this bot is open source and available [here](https://github.com/Helias/Speech-Gender-Recognition-Bot).
+
+To install the project locally, read the follows instructions.
 
 ## Requirements
 
@@ -85,4 +88,3 @@ Rscript extractor_feature.r
 
 - **[Valentjno](https://github.com/Valentjno)**  
 - **[Helias](https://github.com/Helias)**
-
