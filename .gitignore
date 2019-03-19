@@ -5,5 +5,8 @@ R/male/*.wav
 R/female/*.wav
 R/.RData
 R/.Rhistory
+R/my_voice.csv
 *.sav
 models_trained/*.sav
+voice.wav
+my_voice.csv

@@ -1,5 +1,4 @@
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
 from sklearn.utils import shuffle
 
 def imp_dataset(dataset_path):

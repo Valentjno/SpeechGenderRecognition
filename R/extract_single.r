@@ -1,14 +1,5 @@
-library(caTools)
-library(rpart)
-library(rpart.plot)
-library(randomForest)
-library(e1071)
-
 library(tuneR)
 library(seewave)
-library(xgboost)
-#library(warbleR)
-#library(mice)
 
 specan3 <- function(X, bp = c(0,22), wl = 2048, threshold = 5, parallel = 1){
   # To use parallel processing: library(devtools), install_github('nathanvan/parallelsugar')
@@ -72,7 +63,7 @@ specan3 <- function(X, bp = c(0,22), wl = 2048, threshold = 5, parallel = 1){
   
   options(warn = 0)
   
-  if(parallel == 1) cat("Measuring acoustic parameters:")
+  if(parallel == 1)
   x <- as.data.frame(lapp(1:length(start), function(i) { 
     r <- tuneR::readWave(file.path(getwd(), sound.files[i]), from = start[i], to = end[i], units = "seconds") 
     
@@ -140,44 +131,34 @@ specan3 <- function(X, bp = c(0,22), wl = 2048, threshold = 5, parallel = 1){
   return(x)
 }
 
-processFolder <- function(folderName) {
+processFolder <- function() {
   # Start with empty data.frame.
   data <- data.frame()
   
   # Get list of files in the folder.
-  list <- list.files(folderName, '.wav$')
-  print(list)
+  list <- list.files('./', '.wav$')
   
   # Add file list to data.frame for processing.
   for (fileName in list) {
     row <- data.frame(fileName, 0, 0, 20)
     data <- rbind(data, row)
   }
-  
+
   # Set column names.
   names(data) <- c('sound.files', 'selec', 'start', 'end')
-  
-  # Move into folder for processing.
-  setwd(folderName)
-  
+
   # Process files.
   acoustics <- specan3(data, parallel=1)
   
   # Move back into parent folder.
-  setwd('..')
-  
   acoustics
 }
 
 # Load data
-males <- processFolder('male')
-females <- processFolder('female')
+males <- processFolder()
 
 # Set labels.
-males$label <- 1
-females$label <- 2
-data <- rbind(males, females)
-data$label <- factor(data$label, labels=c('male', 'female'))
+data <- rbind(males)
 
 # Remove unused columns.
 data$duration <- NULL
