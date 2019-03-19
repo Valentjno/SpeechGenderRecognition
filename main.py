@@ -1,11 +1,18 @@
+import argparse
+import os
+import subprocess
+
 from functions.import_dataset import *
 from functions.new_sample import *
 from functions.LR import *
-import argparse
+from sklearn.preprocessing import Normalizer
+from sklearn.decomposition import PCA
+from shutil import copyfile
 
 parser = argparse.ArgumentParser(description='car model recognition')
 
-parser.add_argument("-i", "--input",      action="store",       dest="inp",   help="Take a sample wav file and classify it", type=str)
+parser.add_argument("-w", "--wav",        action="store",       dest="wav",   help="Take a sample wav file and classify it", type=str)
+parser.add_argument("-i", "--input",      action="store",       dest="inp",   help="Take a sample csv file and classify it", type=str)
 parser.add_argument("-r", "--run",        action="store_true",                help="Run the classifier and see the accuracy results")
 args = parser.parse_args()
 
@@ -23,11 +30,9 @@ def test_new_sample(file):
   test = spectral_properties(file)
   new_sample = [test[t] for t in test]
 
-  from sklearn.preprocessing import Normalizer
   norm = Normalizer(norm='l2')
-  new_sample = norm.transform([new_sample])
+  new_sample = norm.transform(np.float64([new_sample]))
 
-  from sklearn.decomposition import PCA
   pca=PCA()
   pca.fit(x_train)
   new_sample=pca.transform(new_sample)[0]
@@ -36,25 +41,25 @@ def test_new_sample(file):
   # print(new_sample)
   return new_sample
 
-if args.inp:
-
+if args.inp or args.wav:
   # fitting model
   try:
       svc = load_model("models_trained/svc_model.sav")
       lr = load_model("models_trained/lr_model.sav")
       nb = load_model("models_trained/nb_model.sav")
       _2nn = load_model("models_trained/2nn_model.sav")
+      pca = pickle.load(open("models_trained/pca.sav", 'rb'))
   except:
       x_train, y_train, x_test, y_test = imp_dataset("dataset/voice.csv")
       x_train, x_test      = normalize_L2(x_train, x_test)
       x_train, x_test, pca = PCA_decomposition(x_train, x_test)
-      pickle.dump(pca,open("models_trained/pca.sav",'wb'))
+      pickle.dump(pca, open("models_trained/pca.sav",'wb'))
       svc = fit_SVC(x_train, y_train, _gamma="scale")
       lr = fit_LR(x_train, y_train)
       nb = fit_Bernoulli_NB(x_train, y_train)
       _2nn = fit_2NN(x_train, y_train, _algorithm="ball_tree", _weights="distance")
-      
-          
+
+if args.inp:
   file_path = args.inp
 
   file_lines = open(file_path, "r").read().split("\n")
@@ -77,14 +82,9 @@ if args.inp:
     y_samples.append(sample_csv[i][-1])
 
   norm = Normalizer(norm='l2')
-
   x_samples = norm.transform(x_samples)
-  try:
-      pca = pickle.load(open("models_trained/pca.sav", 'rb'))
-      x_samples = pca.transform(x_samples)
-  except:
-      x_samples = pca.transform(x_samples)
-      
+  x_samples = pca.transform(x_samples)
+
   svc_res   = svc.predict(x_samples),
   lr_res    = lr.predict(np.float64(x_samples)),
   nb_res    = nb.predict(np.float64(x_samples)),
@@ -106,5 +106,25 @@ if args.inp:
         str(success[1])+"/"+str(tot)+" \t "+
         str(success[2])+"/"+str(tot)+" \t "+
         str(success[3])+"/"+str(tot))
+
+if args.wav:
+  copyfile(args.wav, "voice.wav")
+
+  FNULL = open(os.devnull, 'w')
+  subprocess.call(('Rscript', "R/extract_single.r"), stdout=FNULL, stderr=subprocess.STDOUT)
+
+  # read second line of csv file (so exclude header)
+  sample = open("my_voice.csv", "r").read().split("\n")[1].split(",")
+  sample = [sample]
+
+  norm = Normalizer(norm='l2')
+  sample = norm.transform(np.float64(sample))
+  sample = pca.transform(np.float64(sample))
+
+  print("male: 0, female: 1")
+  print("SVC: \t",svc.predict(sample)[0])
+  print("LR: \t", lr.predict(np.float64(sample))[0])
+  print("NB: \t", nb.predict(np.float64(sample))[0])
+  print("2NN: \t", _2nn.predict(np.float64(sample))[0])
 
 
