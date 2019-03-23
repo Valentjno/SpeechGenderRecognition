@@ -28,20 +28,20 @@ if args.run: # --run or -r
 if args.inp or args.wav:
   # fitting model
   try:
-      svc = load_model("models_trained/svc_model.sav")
+      svm = load_model("models_trained/svc_model.sav")
       lr = load_model("models_trained/lr_model.sav")
       nb = load_model("models_trained/nb_model.sav")
-      _2nn = load_model("models_trained/2nn_model.sav")
+      _knn = load_model("models_trained/knn_model.sav")
       pca = pickle.load(open("models_trained/pca.sav", 'rb'))
   except:
       x_train, y_train, x_test, y_test = imp_dataset("dataset/voice.csv")
       x_train, x_test      = normalize_L2(x_train, x_test)
       x_train, x_test, pca = PCA_decomposition(x_train, x_test)
       pickle.dump(pca, open("models_trained/pca.sav",'wb'))
-      svc = fit_SVC(x_train, y_train, _gamma="scale")
+      svm = fit_SVC(x_train, y_train, _gamma="scale")
       lr = fit_LR(x_train, y_train)
       nb = fit_Bernoulli_NB(x_train, y_train)
-      _2nn = fit_2NN(x_train, y_train, _algorithm="ball_tree", _weights="distance")
+      _knn = fit_knn(x_train, y_train, _algorithm="ball_tree", _weights="distance")
 
 if args.inp:
   file_path = args.inp
@@ -57,7 +57,7 @@ if args.inp:
     f = f.replace('"', '')
     sample_csv.append(f.split(","))
 
-  models = ["SVC", "LR", "NB", "2NN"]
+  models = ["SVM", "LR", "NB", "KNN"]
 
   x_samples = []
   y_samples = []
@@ -69,22 +69,22 @@ if args.inp:
   x_samples = norm.transform(x_samples)
   x_samples = pca.transform(x_samples)
 
-  svc_res   = svc.predict(x_samples),
+  svc_res   = svm.predict(x_samples),
   lr_res    = lr.predict(np.float64(x_samples)),
   nb_res    = nb.predict(np.float64(x_samples)),
-  _2nn_res  =_2nn.predict(np.float64(x_samples)),
+  _knn_res  =_knn.predict(np.float64(x_samples)),
 
   success = [0, 0, 0, 0]
   tot = len(svc_res[0])
 
-  print("SVC \t LR \t NB \t 2NN \t label")
+  print("SVM \t LR \t NB \t KNN \t label")
   for i in range(tot):
-    print(str(svc_res[0][i])+" \t "+str(lr_res[0][i])+" \t "+str(nb_res[0][i])+" \t "+str(_2nn_res[0][i])+" \t "+y_samples[i])
+    print(str(svc_res[0][i])+" \t "+str(lr_res[0][i])+" \t "+str(nb_res[0][i])+" \t "+str(_knn_res[0][i])+" \t "+y_samples[i])
 
     success[0] += 1 if int(svc_res[0][i])  == int(y_samples[i]) else 0
     success[1] += 1 if int(lr_res[0][i])   == int(y_samples[i]) else 0
     success[2] += 1 if int(nb_res[0][i])   == int(y_samples[i]) else 0
-    success[3] += 1 if int(_2nn_res[0][i]) == int(y_samples[i]) else 0
+    success[3] += 1 if int(_knn_res[0][i]) == int(y_samples[i]) else 0
 
   print(str(success[0])+"/"+str(tot)+" \t "+
         str(success[1])+"/"+str(tot)+" \t "+
@@ -106,9 +106,9 @@ if args.wav:
   sample = pca.transform(np.float64(sample))
 
   print("male: 0, female: 1")
-  print("SVC: \t",svc.predict(sample)[0])
+  print("SVM: \t",svm.predict(sample)[0])
   print("LR: \t", lr.predict(np.float64(sample))[0])
   print("NB: \t", nb.predict(np.float64(sample))[0])
-  print("2NN: \t", _2nn.predict(np.float64(sample))[0])
+  print("KNN: \t", _knn.predict(np.float64(sample))[0])
 
 

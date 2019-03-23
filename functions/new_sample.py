@@ -54,6 +54,6 @@ def test_new_sample(file):
   pca.fit(x_train)
   new_sample=pca.transform(new_sample)[0]
 
-  print(svc.predict([new_sample]))
+  print(svm.predict([new_sample]))
   # print(new_sample)
   return new_sample

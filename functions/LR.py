@@ -45,12 +45,12 @@ The possible parameters are:
   _weights:
       - "uniform"(default), "distance".
 '''
-def fit_2NN(X_train,y_train,_algorithm="",_weights="uniform"):
+def fit_KNN(X_train,y_train,_algorithm="",_weights="uniform"):
     from sklearn import neighbors
     if(_algorithm==""):
-        clf = neighbors.KNeighborsClassifier(2,weights=_weights)
+        clf = neighbors.KNeighborsClassifier(11, weights=_weights)
     else:        
-        clf = neighbors.KNeighborsClassifier(2,algorithm=_algorithm, weights=_weights)
+        clf = neighbors.KNeighborsClassifier(11, algorithm=_algorithm, weights=_weights)
     clf.fit(X_train, y_train.ravel())
     return clf
 
@@ -111,18 +111,18 @@ def run_classifier(x_train, y_train, x_test, y_test):
     acc, conf_matrix = predict_and_score(nb, x_test, y_test)
     print("NB: \t", acc)
 
-    svc = fit_SVC(x_train, y_train, _gamma="scale")
-    acc, conf_matrix = predict_and_score(svc, x_test, y_test)
-    print("SVC: \t", acc)
+    svm = fit_SVC(x_train, y_train, _gamma="scale")
+    acc, conf_matrix = predict_and_score(svm, x_test, y_test)
+    print("SVM: \t", acc)
 
-    _2nn = fit_2NN(x_train, y_train, _algorithm="ball_tree", _weights="distance")
-    acc, conf_matrix = predict_and_score(_2nn, x_test, y_test)
-    print("2NN: \t", acc)
+    _knn = fit_KNN(x_train, y_train, _algorithm="ball_tree", _weights="distance")
+    acc, conf_matrix = predict_and_score(_knn, x_test, y_test)
+    print("KNN: \t", acc)
     
     save_model(lr,"models_trained/lr_model")
     save_model(nb,"models_trained/nb_model")
-    save_model(svc,"models_trained/svc_model")
-    save_model(_2nn,"models_trained/2nn_model")
+    save_model(svm,"models_trained/svc_model")
+    save_model(_knn,"models_trained/knn_model")
 
 #after the fit
 def save_model(model,filename):
