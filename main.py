@@ -9,7 +9,7 @@ from sklearn.preprocessing import Normalizer
 from sklearn.decomposition import PCA
 from shutil import copyfile
 
-parser = argparse.ArgumentParser(description='car model recognition')
+parser = argparse.ArgumentParser(description='speech gender classification')
 
 parser.add_argument("-w", "--wav",        action="store",       dest="wav",   help="Take a sample wav file and classify it", type=str)
 parser.add_argument("-i", "--input",      action="store",       dest="inp",   help="Take a sample csv file and classify it", type=str)
