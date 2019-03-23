@@ -28,7 +28,7 @@ if args.run: # --run or -r
 if args.inp or args.wav:
   # fitting model
   try:
-      svm = load_model("models_trained/svc_model.sav")
+      svm = load_model("models_trained/svm_model.sav")
       lr = load_model("models_trained/lr_model.sav")
       nb = load_model("models_trained/nb_model.sav")
       _knn = load_model("models_trained/knn_model.sav")
@@ -38,10 +38,10 @@ if args.inp or args.wav:
       x_train, x_test      = normalize_L2(x_train, x_test)
       x_train, x_test, pca = PCA_decomposition(x_train, x_test)
       pickle.dump(pca, open("models_trained/pca.sav",'wb'))
-      svm = fit_SVC(x_train, y_train, _gamma="scale")
+      svm = fit_SVM(x_train, y_train, _gamma="scale")
       lr = fit_LR(x_train, y_train)
       nb = fit_Bernoulli_NB(x_train, y_train)
-      _knn = fit_knn(x_train, y_train, _algorithm="ball_tree", _weights="distance")
+      _knn = fit_KNN(x_train, y_train, _algorithm="ball_tree", _weights="distance")
 
 if args.inp:
   file_path = args.inp
@@ -69,19 +69,19 @@ if args.inp:
   x_samples = norm.transform(x_samples)
   x_samples = pca.transform(x_samples)
 
-  svc_res   = svm.predict(x_samples),
+  svm_res   = svm.predict(x_samples),
   lr_res    = lr.predict(np.float64(x_samples)),
   nb_res    = nb.predict(np.float64(x_samples)),
   _knn_res  =_knn.predict(np.float64(x_samples)),
 
   success = [0, 0, 0, 0]
-  tot = len(svc_res[0])
+  tot = len(svm_res[0])
 
   print("SVM \t LR \t NB \t KNN \t label")
   for i in range(tot):
-    print(str(svc_res[0][i])+" \t "+str(lr_res[0][i])+" \t "+str(nb_res[0][i])+" \t "+str(_knn_res[0][i])+" \t "+y_samples[i])
+    print(str(svm_res[0][i])+" \t "+str(lr_res[0][i])+" \t "+str(nb_res[0][i])+" \t "+str(_knn_res[0][i])+" \t "+y_samples[i])
 
-    success[0] += 1 if int(svc_res[0][i])  == int(y_samples[i]) else 0
+    success[0] += 1 if int(svm_res[0][i])  == int(y_samples[i]) else 0
     success[1] += 1 if int(lr_res[0][i])   == int(y_samples[i]) else 0
     success[2] += 1 if int(nb_res[0][i])   == int(y_samples[i]) else 0
     success[3] += 1 if int(_knn_res[0][i]) == int(y_samples[i]) else 0

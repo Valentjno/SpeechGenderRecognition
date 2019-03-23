@@ -55,7 +55,7 @@ def fit_KNN(X_train,y_train,_algorithm="",_weights="uniform"):
     return clf
 
 # _gamma= "auto" or "scale"
-def fit_SVC(X_train,y_train, _gamma="auto"):
+def fit_SVM(X_train,y_train, _gamma="auto"):
     from sklearn import svm
     clf = svm.NuSVC(gamma=_gamma)
     clf.fit(X_train, y_train.ravel())
@@ -111,7 +111,7 @@ def run_classifier(x_train, y_train, x_test, y_test):
     acc, conf_matrix = predict_and_score(nb, x_test, y_test)
     print("NB: \t", acc)
 
-    svm = fit_SVC(x_train, y_train, _gamma="scale")
+    svm = fit_SVM(x_train, y_train, _gamma="scale")
     acc, conf_matrix = predict_and_score(svm, x_test, y_test)
     print("SVM: \t", acc)
 
@@ -121,7 +121,7 @@ def run_classifier(x_train, y_train, x_test, y_test):
     
     save_model(lr,"models_trained/lr_model")
     save_model(nb,"models_trained/nb_model")
-    save_model(svm,"models_trained/svc_model")
+    save_model(svm,"models_trained/svm_model")
     save_model(_knn,"models_trained/knn_model")
 
 #after the fit
